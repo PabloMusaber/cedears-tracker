@@ -23,11 +23,11 @@ public class Availability
 public class GroupedInstrument
 {
     public string Name { get; set; } = string.Empty;
-    public List<Instrument> Instruments { get; set; } = new();
+    public List<InstrumentBalance> Instruments { get; set; } = new();
     public decimal GroupedValue { get; set; }
 }
 
-public class Instrument
+public class InstrumentBalance
 {
     public string Ticker { get; set; } = string.Empty;
     public string Description { get; set; } = string.Empty;
