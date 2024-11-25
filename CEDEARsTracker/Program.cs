@@ -1,4 +1,6 @@
 using CEDEARsTracker.Infraestructure;
+using CEDEARsTracker.Infraestructure.Repositories;
+using CEDEARsTracker.Infraestructure.Repositories.Interfaces;
 using CEDEARsTracker.Services;
 using Microsoft.EntityFrameworkCore;
 
@@ -11,6 +13,7 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddControllers();
 
 builder.Services.AddHttpClient<IMarketClientService, MarketClientService>();
+builder.Services.AddScoped<IInstrumentRepository, InstrumentRepository>();
 
 
 Console.WriteLine("--> Using SQL Server Db");
