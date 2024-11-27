@@ -14,7 +14,9 @@ builder.Services.AddControllers();
 
 builder.Services.AddHttpClient<IMarketClientService, MarketClientService>();
 builder.Services.AddScoped<IInstrumentRepository, InstrumentRepository>();
-
+builder.Services.AddScoped<IMovementRepository, MovementRepository>();
+builder.Services.AddScoped<IMovementService, MovementService>();
+builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
 Console.WriteLine("--> Using SQL Server Db");
 builder.Services.AddDbContext<AppDbContext>(opt =>

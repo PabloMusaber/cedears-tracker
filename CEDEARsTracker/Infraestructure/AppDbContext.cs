@@ -11,8 +11,8 @@ namespace CEDEARsTracker.Infraestructure
 
         }
 
-        public DbSet<Instrument>? Instruments { get; set; } //This indicates how to map the internal data with our database.
-        public DbSet<Movement>? Movements { get; set; }
+        public DbSet<Instrument> Instruments { get; set; } = null!; //This indicates how to map the internal data with our database.
+        public DbSet<Movement> Movements { get; set; } = null!;
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
