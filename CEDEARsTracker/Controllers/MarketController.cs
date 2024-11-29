@@ -1,7 +1,7 @@
 namespace CEDEARsTracker.Controllers;
 
 using CEDEARsTracker.Models;
-using CEDEARsTracker.Services;
+using CEDEARsTracker.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
 [ApiController]

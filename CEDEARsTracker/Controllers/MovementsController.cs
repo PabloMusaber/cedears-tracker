@@ -1,5 +1,5 @@
 using CEDEARsTracker.Dtos;
-using CEDEARsTracker.Services;
+using CEDEARsTracker.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CEDEARsTracker.Controllers

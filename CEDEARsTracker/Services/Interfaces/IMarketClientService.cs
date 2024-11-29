@@ -1,4 +1,4 @@
-namespace CEDEARsTracker.Services;
+namespace CEDEARsTracker.Services.Interfaces;
 
 using CEDEARsTracker.Models;
 

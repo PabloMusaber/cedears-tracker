@@ -2,6 +2,7 @@ using CEDEARsTracker.Infraestructure;
 using CEDEARsTracker.Infraestructure.Repositories;
 using CEDEARsTracker.Infraestructure.Repositories.Interfaces;
 using CEDEARsTracker.Services;
+using CEDEARsTracker.Services.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);

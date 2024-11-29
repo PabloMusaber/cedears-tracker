@@ -1,6 +1,6 @@
 using CEDEARsTracker.Dtos;
 
-namespace CEDEARsTracker.Services
+namespace CEDEARsTracker.Services.Interfaces
 {
     public interface IMovementService
     {

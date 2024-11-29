@@ -2,6 +2,7 @@ using AutoMapper;
 using CEDEARsTracker.Dtos;
 using CEDEARsTracker.Infraestructure.Repositories.Interfaces;
 using CEDEARsTracker.Models;
+using CEDEARsTracker.Services.Interfaces;
 
 namespace CEDEARsTracker.Services
 {

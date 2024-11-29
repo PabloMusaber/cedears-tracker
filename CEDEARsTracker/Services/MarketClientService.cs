@@ -3,6 +3,7 @@ namespace CEDEARsTracker.Services;
 using System.Net.Http.Headers;
 using System.Text.Json;
 using CEDEARsTracker.Models;
+using CEDEARsTracker.Services.Interfaces;
 
 public class MarketClientService : IMarketClientService
 {
