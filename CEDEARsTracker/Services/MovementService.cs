@@ -3,6 +3,7 @@ using CEDEARsTracker.Dtos;
 using CEDEARsTracker.Infraestructure.Repositories.Interfaces;
 using CEDEARsTracker.Models;
 using CEDEARsTracker.Services.Interfaces;
+using static CEDEARsTracker.Enumerations.Enumerations;
 
 namespace CEDEARsTracker.Services
 {
@@ -24,6 +25,11 @@ namespace CEDEARsTracker.Services
             if (movementCreateDto == null)
             {
                 throw new ArgumentNullException(nameof(movementCreateDto));
+            }
+
+            if (!IsValidMovementType(movementCreateDto.MovementType))
+            {
+                throw new ArgumentException($"Invalid MovementType value: {movementCreateDto.MovementType}");
             }
 
             if (!_instrumentRepository.InstrumentExists(instrumentId))
@@ -54,5 +60,11 @@ namespace CEDEARsTracker.Services
         {
             return await _movementRepository.DeleteAsync(movementId);
         }
+
+        private bool IsValidMovementType(char movementTypeChar)
+        {
+            return Enum.IsDefined(typeof(MovementType), (int)movementTypeChar);
+        }
+
     }
 }

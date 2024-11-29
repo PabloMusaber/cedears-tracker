@@ -7,6 +7,6 @@ namespace CEDEARsTracker.Dtos
         public int Quantity { get; set; }
         public Guid InstrumentId { get; set; }
         public string Ticker { get; set; } = string.Empty;
-        public DateTime InsertDate { get; set; }
+        public char MovementType { get; set; }
     }
 }

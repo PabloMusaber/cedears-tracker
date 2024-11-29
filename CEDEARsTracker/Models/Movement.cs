@@ -10,6 +10,8 @@ namespace CEDEARsTracker.Models
 
         public int Quantity { get; set; }
 
+        public char MovementType { get; set; }
+
         [Required]
         public Guid InstrumentId { get; set; } // Foreign Key
 

@@ -7,5 +7,11 @@ namespace CEDEARsTracker.Enumerations
             CEDEARs = 1,
             LETRAS = 2
         }
+
+        public enum MovementType
+        {
+            Buy = 'B',
+            Sell = 'S'
+        }
     }
 }

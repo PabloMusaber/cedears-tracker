@@ -9,5 +9,8 @@ namespace CEDEARsTracker.Dtos
 
         [Required]
         public int Quantity { get; set; }
+
+        [Required]
+        public char MovementType { get; set; } = (char)Enumerations.Enumerations.MovementType.Buy;
     }
 }
