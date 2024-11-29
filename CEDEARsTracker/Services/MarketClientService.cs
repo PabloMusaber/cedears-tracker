@@ -1,63 +1,64 @@
-namespace CEDEARsTracker.Services;
-
 using System.Net.Http.Headers;
 using System.Text.Json;
 using CEDEARsTracker.Models;
 using CEDEARsTracker.Services.Interfaces;
 
-public class MarketClientService : IMarketClientService
+namespace CEDEARsTracker.Services
 {
-    private readonly HttpClient _httpClient;
-    private readonly IConfiguration _configuration;
-
-    public MarketClientService(HttpClient httpClient, IConfiguration configuration)
+    public class MarketClientService : IMarketClientService
     {
-        _httpClient = httpClient ?? throw new ArgumentNullException(nameof(httpClient));
-        _configuration = configuration ?? throw new ArgumentNullException(nameof(configuration));
-        _httpClient.BaseAddress = new Uri(_configuration["PPI:BaseUrl"] ??
-            throw new InvalidOperationException("The PPI:BaseUrl configuration value is missing."));
-    }
+        private readonly HttpClient _httpClient;
+        private readonly IConfiguration _configuration;
 
-    public async Task<string?> GetAuthTokenAsync()
-    {
-        var request = new HttpRequestMessage(HttpMethod.Post, "api/1.0/Account/LoginApi");
+        public MarketClientService(HttpClient httpClient, IConfiguration configuration)
+        {
+            _httpClient = httpClient ?? throw new ArgumentNullException(nameof(httpClient));
+            _configuration = configuration ?? throw new ArgumentNullException(nameof(configuration));
+            _httpClient.BaseAddress = new Uri(_configuration["PPI:BaseUrl"] ??
+                throw new InvalidOperationException("The PPI:BaseUrl configuration value is missing."));
+        }
 
-        request.Headers.Add("AuthorizedClient", _configuration["PPI:AuthorizedClient"]);
-        request.Headers.Add("ClientKey", _configuration["PPI:ClientKey"]);
-        request.Headers.Add("ApiKey", _configuration["PPI:ApiKey"]);
-        request.Headers.Add("ApiSecret", _configuration["PPI:ApiSecret"]);
-        request.Headers.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+        public async Task<string?> GetAuthTokenAsync()
+        {
+            var request = new HttpRequestMessage(HttpMethod.Post, "api/1.0/Account/LoginApi");
 
-        var response = await _httpClient.SendAsync(request);
-        response.EnsureSuccessStatusCode();
+            request.Headers.Add("AuthorizedClient", _configuration["PPI:AuthorizedClient"]);
+            request.Headers.Add("ClientKey", _configuration["PPI:ClientKey"]);
+            request.Headers.Add("ApiKey", _configuration["PPI:ApiKey"]);
+            request.Headers.Add("ApiSecret", _configuration["PPI:ApiSecret"]);
+            request.Headers.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
-        var responseContent = await response.Content.ReadAsStringAsync();
+            var response = await _httpClient.SendAsync(request);
+            response.EnsureSuccessStatusCode();
 
-        AuthTokenResponse? token = JsonSerializer.Deserialize<AuthTokenResponse>(responseContent,
-            new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
+            var responseContent = await response.Content.ReadAsStringAsync();
 
-        return token?.AccessToken;
-    }
+            AuthTokenResponse? token = JsonSerializer.Deserialize<AuthTokenResponse>(responseContent,
+                new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
 
-    public async Task<BalancesAndPositionsResponse> GetBalancesAndPositionsAsync(string accountNumber)
-    {
-        var token = await GetAuthTokenAsync();
+            return token?.AccessToken;
+        }
 
-        var request = new HttpRequestMessage(HttpMethod.Get,
-            $"api/1.0/Account/BalancesAndPositions?accountNumber={accountNumber}");
+        public async Task<BalancesAndPositionsResponse> GetBalancesAndPositionsAsync(string accountNumber)
+        {
+            var token = await GetAuthTokenAsync();
 
-        request.Headers.Add("AuthorizedClient", _configuration["PPI:AuthorizedClient"]);
-        request.Headers.Add("ClientKey", _configuration["PPI:ClientKey"]);
-        request.Headers.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-        request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", token);
+            var request = new HttpRequestMessage(HttpMethod.Get,
+                $"api/1.0/Account/BalancesAndPositions?accountNumber={accountNumber}");
 
-        var response = await _httpClient.SendAsync(request);
-        response.EnsureSuccessStatusCode();
+            request.Headers.Add("AuthorizedClient", _configuration["PPI:AuthorizedClient"]);
+            request.Headers.Add("ClientKey", _configuration["PPI:ClientKey"]);
+            request.Headers.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+            request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", token);
 
-        var content = await response.Content.ReadAsStringAsync();
-        var balanceResponse = JsonSerializer.Deserialize<BalancesAndPositionsResponse>(content,
-            new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
+            var response = await _httpClient.SendAsync(request);
+            response.EnsureSuccessStatusCode();
 
-        return balanceResponse ?? new BalancesAndPositionsResponse();
+            var content = await response.Content.ReadAsStringAsync();
+            var balanceResponse = JsonSerializer.Deserialize<BalancesAndPositionsResponse>(content,
+                new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
+
+            return balanceResponse ?? new BalancesAndPositionsResponse();
+        }
     }
 }

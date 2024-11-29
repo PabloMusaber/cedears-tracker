@@ -1,9 +1,10 @@
-namespace CEDEARsTracker.Services.Interfaces;
-
 using CEDEARsTracker.Models;
 
-public interface IMarketClientService
+namespace CEDEARsTracker.Services.Interfaces
 {
-    Task<string?> GetAuthTokenAsync();
-    Task<BalancesAndPositionsResponse> GetBalancesAndPositionsAsync(string accountNumber);
+    public interface IMarketClientService
+    {
+        Task<string?> GetAuthTokenAsync();
+        Task<BalancesAndPositionsResponse> GetBalancesAndPositionsAsync(string accountNumber);
+    }
 }

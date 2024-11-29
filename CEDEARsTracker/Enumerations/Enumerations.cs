@@ -1,10 +1,11 @@
-namespace CEDEARsTracker.Enumerations;
-
-public class Enumerations
+namespace CEDEARsTracker.Enumerations
 {
-    public enum InstrumentType
+    public class Enumerations
     {
-        CEDEARs = 1,
-        LETRAS = 2
+        public enum InstrumentType
+        {
+            CEDEARs = 1,
+            LETRAS = 2
+        }
     }
 }

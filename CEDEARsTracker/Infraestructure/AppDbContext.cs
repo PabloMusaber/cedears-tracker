@@ -3,7 +3,6 @@ using Microsoft.EntityFrameworkCore;
 
 namespace CEDEARsTracker.Infraestructure
 {
-
     public class AppDbContext : DbContext
     {
         public AppDbContext(DbContextOptions<AppDbContext> opt) : base(opt)

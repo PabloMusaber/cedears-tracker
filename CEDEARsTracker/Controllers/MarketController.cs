@@ -1,31 +1,32 @@
-namespace CEDEARsTracker.Controllers;
-
 using CEDEARsTracker.Models;
 using CEDEARsTracker.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
-[ApiController]
-[Route("api/[controller]")]
-public class MarketController : ControllerBase
+namespace CEDEARsTracker.Controllers
 {
-    private readonly IMarketClientService _marketClientService;
-
-    public MarketController(IMarketClientService marketClientService)
+    [ApiController]
+    [Route("api/[controller]")]
+    public class MarketController : ControllerBase
     {
-        _marketClientService = marketClientService;
-    }
+        private readonly IMarketClientService _marketClientService;
 
-    [HttpGet("balance/{accountNumber}")]
-    public async Task<ActionResult<BalancesAndPositionsResponse>> GetBalance(string accountNumber)
-    {
-        try
+        public MarketController(IMarketClientService marketClientService)
         {
-            var balance = await _marketClientService.GetBalancesAndPositionsAsync(accountNumber);
-            return Ok(balance);
+            _marketClientService = marketClientService;
         }
-        catch (HttpRequestException ex)
+
+        [HttpGet("balance/{accountNumber}")]
+        public async Task<ActionResult<BalancesAndPositionsResponse>> GetBalance(string accountNumber)
         {
-            return StatusCode(500, $"Error fetching balance: {ex.Message}");
+            try
+            {
+                var balance = await _marketClientService.GetBalancesAndPositionsAsync(accountNumber);
+                return Ok(balance);
+            }
+            catch (HttpRequestException ex)
+            {
+                return StatusCode(500, $"Error fetching balance: {ex.Message}");
+            }
         }
     }
 }
