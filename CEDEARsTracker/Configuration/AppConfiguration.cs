@@ -29,6 +29,7 @@ namespace CEDEARsTracker.Configuration
         public static void AddServices(this IServiceCollection services)
         {
             services.AddScoped<IMovementService, MovementService>();
+            services.AddScoped<IInstrumentService, InstrumentService>();
         }
 
         public static void AddCustomUtilities(this IServiceCollection services)
