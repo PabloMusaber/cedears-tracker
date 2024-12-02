@@ -1,3 +1,4 @@
+using CEDEARsTracker.Dtos;
 using CEDEARsTracker.Models;
 
 namespace CEDEARsTracker.Services.Interfaces
@@ -6,5 +7,6 @@ namespace CEDEARsTracker.Services.Interfaces
     {
         Task<string?> GetAuthTokenAsync();
         Task<BalancesAndPositionsResponse> GetBalancesAndPositionsAsync(string accountNumber);
+        Task<CurrentPriceResponseDto> GetCurrentPrice(string ticker, string instrumentType, string settlement);
     }
 }

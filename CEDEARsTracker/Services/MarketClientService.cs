@@ -1,5 +1,6 @@
 using System.Net.Http.Headers;
 using System.Text.Json;
+using CEDEARsTracker.Dtos;
 using CEDEARsTracker.Models;
 using CEDEARsTracker.Services.Interfaces;
 
@@ -59,6 +60,28 @@ namespace CEDEARsTracker.Services
                 new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
 
             return balanceResponse ?? new BalancesAndPositionsResponse();
+        }
+
+        public async Task<CurrentPriceResponseDto> GetCurrentPrice(string ticker, string instrumentType, string settlement)
+        {
+            var token = await GetAuthTokenAsync();
+
+            var request = new HttpRequestMessage(HttpMethod.Get,
+                $"api/1.0/MarketData/Current?ticker={ticker}&type={instrumentType}&settlement={settlement}");
+
+            request.Headers.Add("AuthorizedClient", _configuration["PPI:AuthorizedClient"]);
+            request.Headers.Add("ClientKey", _configuration["PPI:ClientKey"]);
+            request.Headers.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+            request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", token);
+
+            var response = await _httpClient.SendAsync(request);
+            response.EnsureSuccessStatusCode();
+
+            var content = await response.Content.ReadAsStringAsync();
+            var currentPrice = JsonSerializer.Deserialize<CurrentPriceResponseDto>(content,
+                new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
+
+            return currentPrice ?? new CurrentPriceResponseDto();
         }
     }
 }
