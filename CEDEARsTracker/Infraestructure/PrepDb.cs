@@ -49,7 +49,7 @@ namespace CEDEARsTracker.Infraestructure
                         Ticker = "KO",
                         Description = "The Coca Cola Company",
                         AveragePurchasePrice = 0,
-                        InstrumentType = InstrumentType.CEDEARs
+                        InstrumentType = InstrumentType.CEDEARS
                     },
                     new Instrument()
                     {
@@ -57,7 +57,7 @@ namespace CEDEARsTracker.Infraestructure
                         Ticker = "MSFT",
                         Description = "Microsoft",
                         AveragePurchasePrice = 0,
-                        InstrumentType = InstrumentType.CEDEARs
+                        InstrumentType = InstrumentType.CEDEARS
                     },
                     new Instrument()
                     {
@@ -65,7 +65,7 @@ namespace CEDEARsTracker.Infraestructure
                         Ticker = "GOOGL",
                         Description = "Alphabet",
                         AveragePurchasePrice = 0,
-                        InstrumentType = InstrumentType.CEDEARs
+                        InstrumentType = InstrumentType.CEDEARS
                     },
                     new Instrument()
                     {
@@ -73,7 +73,7 @@ namespace CEDEARsTracker.Infraestructure
                         Ticker = "AMZN",
                         Description = "Amazon",
                         AveragePurchasePrice = 0,
-                        InstrumentType = InstrumentType.CEDEARs
+                        InstrumentType = InstrumentType.CEDEARS
                     },
                     new Instrument()
                     {
@@ -81,7 +81,7 @@ namespace CEDEARsTracker.Infraestructure
                         Ticker = "AAPL",
                         Description = "Apple",
                         AveragePurchasePrice = 0,
-                        InstrumentType = InstrumentType.CEDEARs
+                        InstrumentType = InstrumentType.CEDEARS
                     }
                 );
 

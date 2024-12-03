@@ -4,7 +4,7 @@ namespace CEDEARsTracker.Enumerations
     {
         public enum InstrumentType
         {
-            CEDEARs = 1,
+            CEDEARS = 1,
             LETRAS = 2
         }
 

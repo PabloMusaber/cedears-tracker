@@ -14,7 +14,7 @@ namespace CEDEARsTracker.Controllers
             _instrumentService = instrumentService;
         }
 
-        [HttpGet()]
+        [HttpGet("average-purchase-price")]
         public async Task<ActionResult> CalculateAveragePurchasePrice()
         {
             Console.WriteLine($"--> Hit CalculateAveragePurchasePrice");
@@ -27,6 +27,22 @@ namespace CEDEARsTracker.Controllers
             catch (Exception ex)
             {
                 return StatusCode(500, $"Error fetching balance: {ex.Message}");
+            }
+        }
+
+        [HttpGet("investment-returns")]
+        public async Task<ActionResult> CalculateInvestmentsReturns()
+        {
+            Console.WriteLine($"--> Hit CalculateInvestmentsReturns");
+
+            try
+            {
+                var investmentsReturnsDto = await _instrumentService.CalculateInvestmentsReturns();
+                return Ok(investmentsReturnsDto);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Error calculating returns: {ex.Message}");
             }
         }
 

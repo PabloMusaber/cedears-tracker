@@ -44,5 +44,24 @@ namespace CEDEARsTracker.Infraestructure.Repositories
             instrument.AveragePurchasePrice = averagePurchasePrice;
             await _context.SaveChangesAsync();
         }
+
+        public async Task<List<InstrumentReadDto>> GetAllInstrumentsAsync()
+        {
+            var instrumentDtos = await _context.Instruments
+                                    .Select(i => new InstrumentReadDto
+                                    {
+                                        Id = i.Id,
+                                        Ticker = i.Ticker,
+                                        Description = i.Description,
+                                        InstrumentType = i.InstrumentType,
+                                        AveragePurchasePrice = i.AveragePurchasePrice,
+                                        Holdings = _context.Movements
+                                            .Where(m => m.InstrumentId == i.Id)
+                                            .Sum(m => m.MovementType == 'B' ? m.Quantity : -m.Quantity)
+                                    })
+                                    .ToListAsync();
+
+            return instrumentDtos;
+        }
     }
 }

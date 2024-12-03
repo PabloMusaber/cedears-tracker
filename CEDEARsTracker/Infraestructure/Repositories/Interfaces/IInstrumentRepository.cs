@@ -7,5 +7,6 @@ namespace CEDEARsTracker.Infraestructure.Repositories.Interfaces
         bool InstrumentExists(Guid instrumentId);
         Task<List<AveragePurchasePriceDto>> GetAveragePurchasePriceAsync();
         Task UpdateAveragePurchasePriceAsync(Guid instrumentId, decimal averagePurchasePrice);
+        Task<List<InstrumentReadDto>> GetAllInstrumentsAsync();
     }
 }
