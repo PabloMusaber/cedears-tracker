@@ -9,6 +9,7 @@ namespace CEDEARsTracker.Dtos
         public string Description { get; set; } = string.Empty;
         public decimal AveragePurchasePrice { get; set; }
         public int Holdings { get; set; }
+        public decimal InvestedAmount { get; set; }
         public InstrumentType InstrumentType { get; set; }
     }
 }

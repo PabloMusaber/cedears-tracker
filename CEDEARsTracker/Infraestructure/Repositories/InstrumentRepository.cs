@@ -48,18 +48,26 @@ namespace CEDEARsTracker.Infraestructure.Repositories
         public async Task<List<InstrumentReadDto>> GetAllInstrumentsAsync()
         {
             var instrumentDtos = await _context.Instruments
-                                    .Select(i => new InstrumentReadDto
-                                    {
-                                        Id = i.Id,
-                                        Ticker = i.Ticker,
-                                        Description = i.Description,
-                                        InstrumentType = i.InstrumentType,
-                                        AveragePurchasePrice = i.AveragePurchasePrice,
-                                        Holdings = _context.Movements
-                                            .Where(m => m.InstrumentId == i.Id)
-                                            .Sum(m => m.MovementType == 'B' ? m.Quantity : -m.Quantity)
-                                    })
-                                    .ToListAsync();
+                .GroupJoin(
+                    _context.Movements,
+                    instrument => instrument.Id,
+                    movement => movement.InstrumentId,
+                    (instrument, movements) => new { instrument, movements }
+                )
+                .Select(g => new InstrumentReadDto
+                {
+                    Id = g.instrument.Id,
+                    Ticker = g.instrument.Ticker,
+                    Description = g.instrument.Description,
+                    InstrumentType = g.instrument.InstrumentType,
+                    AveragePurchasePrice = g.instrument.AveragePurchasePrice,
+                    InvestedAmount = g.movements
+                        .Where(m => m.MovementType == 'B')
+                        .Sum(m => m.Price * m.Quantity),
+                    Holdings = g.movements
+                        .Sum(m => m.MovementType == 'B' ? m.Quantity : -m.Quantity)
+                })
+                .ToListAsync();
 
             return instrumentDtos;
         }

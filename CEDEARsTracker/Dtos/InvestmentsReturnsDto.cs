@@ -11,6 +11,7 @@ namespace CEDEARsTracker.Dtos
         public decimal CurrentPrice { get; set; }
         public decimal InvestmentsReturns { get; set; }
         public decimal ProfitLoss { get; set; }
+        public decimal InvestedAmount { get; set; }
         public InstrumentType InstrumentType { get; set; }
     }
 }
