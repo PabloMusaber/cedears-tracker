@@ -30,6 +30,7 @@ namespace CEDEARsTracker.Configuration
         {
             services.AddScoped<IMovementService, MovementService>();
             services.AddScoped<IInstrumentService, InstrumentService>();
+            services.AddScoped<ISpreadsheetService, SpreadsheetService>();
         }
 
         public static void AddCustomUtilities(this IServiceCollection services)
