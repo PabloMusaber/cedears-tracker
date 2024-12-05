@@ -31,6 +31,7 @@ namespace CEDEARsTracker.Configuration
             services.AddScoped<IMovementService, MovementService>();
             services.AddScoped<IInstrumentService, InstrumentService>();
             services.AddScoped<ISpreadsheetService, SpreadsheetService>();
+            services.AddScoped<ITelegramBotService, TelegramBotService>();
         }
 
         public static void AddCustomUtilities(this IServiceCollection services)
