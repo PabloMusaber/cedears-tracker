@@ -12,12 +12,14 @@ namespace CEDEARsTracker.Services
         private readonly IMovementRepository _movementRepository;
         private readonly IInstrumentRepository _instrumentRepository;
         private readonly IMapper _mapper;
+        private readonly IInstrumentService _instrumentService;
 
-        public MovementService(IMovementRepository movementRepository, IInstrumentRepository instrumentRepository, IMapper mapper)
+        public MovementService(IMovementRepository movementRepository, IInstrumentRepository instrumentRepository, IMapper mapper, IInstrumentService instrumentService)
         {
             _movementRepository = movementRepository;
             _instrumentRepository = instrumentRepository;
             _mapper = mapper;
+            _instrumentService = instrumentService;
         }
 
         public async Task<MovementReadDto?> InsertMovementAsync(Guid instrumentId, MovementCreateDto movementCreateDto)
@@ -41,6 +43,7 @@ namespace CEDEARsTracker.Services
             movement.InstrumentId = instrumentId;
 
             await _movementRepository.InsertMovementAsync(movement);
+            await _instrumentService.CalculateAveragePurchasePriceAsync(instrumentId);
 
             return _mapper.Map<MovementReadDto>(movement);
         }

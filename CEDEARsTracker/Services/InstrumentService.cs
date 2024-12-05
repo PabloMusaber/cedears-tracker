@@ -18,9 +18,9 @@ namespace CEDEARsTracker.Services
             _marketClientService = marketClientService;
         }
 
-        public async Task CalculateAveragePurchasePriceAsync()
+        public async Task CalculateAveragePurchasePriceAsync(Guid? instrumentId)
         {
-            var averagePurchasePrices = await _instrumentRepository.GetAveragePurchasePriceAsync();
+            var averagePurchasePrices = await _instrumentRepository.GetAveragePurchasePriceAsync(instrumentId);
 
             foreach (var item in averagePurchasePrices)
             {

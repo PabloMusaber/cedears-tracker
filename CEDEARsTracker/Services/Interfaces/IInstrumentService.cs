@@ -4,7 +4,7 @@ namespace CEDEARsTracker.Services.Interfaces
 {
     public interface IInstrumentService
     {
-        Task CalculateAveragePurchasePriceAsync();
+        Task CalculateAveragePurchasePriceAsync(Guid? instrumentId);
         Task<List<InvestmentsReturnsDto>> CalculateInvestmentsReturns();
     }
 }

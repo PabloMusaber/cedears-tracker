@@ -18,10 +18,11 @@ namespace CEDEARsTracker.Infraestructure.Repositories
             return _context.Instruments.Any(p => p.Id == instrumentId);
         }
 
-        public async Task<List<AveragePurchasePriceDto>> GetAveragePurchasePriceAsync()
+        public async Task<List<AveragePurchasePriceDto>> GetAveragePurchasePriceAsync(Guid? instrumentId)
         {
             var averagePurchasePrices = await _context.Movements
-                .Where(m => m.MovementType == 'B') // Filter buy movements
+                .Where(m => m.MovementType == 'B'
+                    && (instrumentId == null || m.InstrumentId == instrumentId)) // Filter buy movements
                 .GroupBy(m => m.InstrumentId)
                 .Select(g => new AveragePurchasePriceDto
                 {

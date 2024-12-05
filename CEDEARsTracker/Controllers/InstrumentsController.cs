@@ -15,13 +15,13 @@ namespace CEDEARsTracker.Controllers
         }
 
         [HttpGet("average-purchase-price")]
-        public async Task<ActionResult> CalculateAveragePurchasePrice()
+        public async Task<ActionResult> CalculateAveragePurchasePrice(Guid? instrumentId)
         {
             Console.WriteLine($"--> Hit CalculateAveragePurchasePrice");
 
             try
             {
-                await _instrumentService.CalculateAveragePurchasePriceAsync();
+                await _instrumentService.CalculateAveragePurchasePriceAsync(instrumentId);
                 return Ok();
             }
             catch (Exception ex)
