@@ -10,14 +10,12 @@ namespace CEDEARsTracker.Services
     public class MovementService : IMovementService
     {
         private readonly IMovementRepository _movementRepository;
-        private readonly IInstrumentRepository _instrumentRepository;
         private readonly IMapper _mapper;
         private readonly IInstrumentService _instrumentService;
 
-        public MovementService(IMovementRepository movementRepository, IInstrumentRepository instrumentRepository, IMapper mapper, IInstrumentService instrumentService)
+        public MovementService(IMovementRepository movementRepository, IMapper mapper, IInstrumentService instrumentService)
         {
             _movementRepository = movementRepository;
-            _instrumentRepository = instrumentRepository;
             _mapper = mapper;
             _instrumentService = instrumentService;
         }
@@ -34,7 +32,7 @@ namespace CEDEARsTracker.Services
                 throw new ArgumentException($"Invalid MovementType value: {movementCreateDto.MovementType}");
             }
 
-            if (!_instrumentRepository.InstrumentExists(instrumentId))
+            if (!_instrumentService.InstrumentExists(instrumentId))
             {
                 return null;
             }
@@ -50,7 +48,7 @@ namespace CEDEARsTracker.Services
 
         public async Task<IEnumerable<MovementReadDto>?> GetByInstrumentAsync(Guid instrumentId)
         {
-            if (!_instrumentRepository.InstrumentExists(instrumentId))
+            if (!_instrumentService.InstrumentExists(instrumentId))
             {
                 return null;
             }

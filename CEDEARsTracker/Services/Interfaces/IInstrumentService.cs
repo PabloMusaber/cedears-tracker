@@ -6,5 +6,6 @@ namespace CEDEARsTracker.Services.Interfaces
     {
         Task CalculateAveragePurchasePriceAsync(Guid? instrumentId);
         Task<List<InvestmentsReturnsDto>> CalculateInvestmentsReturns();
+        bool InstrumentExists(Guid instrumentId);
     }
 }

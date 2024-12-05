@@ -43,5 +43,10 @@ namespace CEDEARsTracker.Services
 
             return investmentsReturnsDto;
         }
+
+        public bool InstrumentExists(Guid instrumentId)
+        {
+            return _instrumentRepository.InstrumentExists(instrumentId);
+        }
     }
 }
