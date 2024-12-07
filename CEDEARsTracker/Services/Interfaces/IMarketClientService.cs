@@ -5,7 +5,8 @@ namespace CEDEARsTracker.Services.Interfaces
 {
     public interface IMarketClientService
     {
-        Task<string?> GetAuthTokenAsync();
+        Task<string?> GetTokenAsync();
+        Task<string?> AuthenticateAsync();
         Task<BalancesAndPositionsResponse> GetBalancesAndPositionsAsync(string accountNumber);
         Task<CurrentPriceResponseDto> GetCurrentPrice(string ticker, string instrumentType, string settlement);
     }
