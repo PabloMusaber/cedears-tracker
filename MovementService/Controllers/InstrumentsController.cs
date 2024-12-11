@@ -4,7 +4,7 @@ using MovementService.Services.Interfaces;
 
 namespace MovementService.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/m/[controller]")]
     [ApiController]
     public class InstrumentsController : ControllerBase
     {

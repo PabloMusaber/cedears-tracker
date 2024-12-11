@@ -4,7 +4,7 @@ using MovementService.Services.Interfaces;
 
 namespace MovementService.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/m/instruments/{instrumentId}/[controller]")]
     [ApiController]
     public class MovementsController : ControllerBase
     {
@@ -16,7 +16,7 @@ namespace MovementService.Controllers
             _movementService = movementService;
         }
 
-        [HttpPost("{instrumentId}")]
+        [HttpPost]
         public async Task<ActionResult<MovementReadDto>> CreateMovementForInstrument(Guid instrumentId, MovementCreateDto movementCreateDto)
         {
             Console.WriteLine($"--> Hit CreateMovementForInstrument: {instrumentId}. Quantity: {movementCreateDto.Quantity}, Price: {movementCreateDto.Price}");
@@ -29,7 +29,7 @@ namespace MovementService.Controllers
             return Ok(movementReadDto);
         }
 
-        [HttpGet("{instrumentId}", Name = "GetMovementsForInstrument")]
+        [HttpGet]
         public async Task<ActionResult<IEnumerable<MovementReadDto>>> GetMovementsForInstrument(Guid instrumentId)
         {
             Console.WriteLine($"--> Hit GetMovementsForInstrument: {instrumentId}");
