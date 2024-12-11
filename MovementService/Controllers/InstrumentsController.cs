@@ -36,5 +36,12 @@ namespace MovementService.Controllers
             return Ok(instruments);
         }
 
+        [HttpPost("test")]
+        public ActionResult TestInboundConnection()
+        {
+            Console.WriteLine("--> Inbound POST # Movement Service");
+            return Ok("Inbound test of from Instrument Controller");
+        }
+
     }
 }

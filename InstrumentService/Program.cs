@@ -3,6 +3,7 @@ using InstrumentService.Infraestructure.Repositories.Interfaces;
 using InstrumentService.Services.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using InstrumentService.Data;
+using InstrumentService.SyncDataServices.Http;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -13,6 +14,7 @@ builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
 builder.Services.AddScoped<IInstrumentRepository, InstrumentRepository>();
 builder.Services.AddScoped<IInstrumentService, InstrumentService.Services.InstrumentService>();
+builder.Services.AddHttpClient<IHttpMovementDataClient, HttpMovementDataClient>();
 
 // Configure DbContext based on the environment
 if (builder.Environment.IsDevelopment())

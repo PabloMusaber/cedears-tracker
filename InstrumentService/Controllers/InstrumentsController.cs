@@ -1,5 +1,6 @@
 using InstrumentService.Dtos;
 using InstrumentService.Services.Interfaces;
+using InstrumentService.SyncDataServices.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace InstrumentService.Controllers
@@ -9,21 +10,32 @@ namespace InstrumentService.Controllers
     public class InstrumentsController : ControllerBase
     {
         private readonly IInstrumentService _instrumentService;
+        private readonly IHttpMovementDataClient _movementDataClient;
 
-
-        public InstrumentsController(IInstrumentService instrumentService)
+        public InstrumentsController(IInstrumentService instrumentService, IHttpMovementDataClient movementDataClient)
         {
             _instrumentService = instrumentService;
+            _movementDataClient = movementDataClient;
         }
 
         [HttpPost]
-        public async Task<ActionResult<InstrumentReadDto>> CreatePlatform(InstrumentCreateDto instrumentCreateDto)
+        public async Task<ActionResult<InstrumentReadDto>> CreateInstrument(InstrumentCreateDto instrumentCreateDto)
         {
             Console.WriteLine("--> Creating instrument...");
 
-            var platformReadDto = await _instrumentService.CreateInstrument(instrumentCreateDto);
+            var instrumentReadDto = await _instrumentService.CreateInstrument(instrumentCreateDto);
 
-            return Ok(platformReadDto);
+            // Send Sync Message to Movement Service
+            try
+            {
+                await _movementDataClient.SendInstrumentToMovementService(instrumentReadDto);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"--> Could not send synchronously: {ex.Message}");
+            }
+
+            return Ok(instrumentReadDto);
         }
 
         [HttpGet]
