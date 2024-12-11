@@ -14,9 +14,6 @@ namespace InstrumentService.Models
 
         public string Description { get; set; } = string.Empty;
 
-        [Column(TypeName = "DECIMAL(18, 2)")]
-        public decimal AveragePurchasePrice { get; set; }
-
         public InstrumentType InstrumentType { get; set; }
     }
 }
