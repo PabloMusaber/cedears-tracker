@@ -6,6 +6,9 @@ namespace MovementService.Dtos
     public class InstrumentCreateDto
     {
         [Required]
+        public Guid ExternalId { get; set; }
+
+        [Required]
         public string Ticker { get; set; } = string.Empty;
 
         [Required]

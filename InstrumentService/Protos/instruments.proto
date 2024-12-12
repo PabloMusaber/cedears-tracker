@@ -1,0 +1,20 @@
+syntax = "proto3";
+
+option csharp_namespace = "InstrumentService";
+
+service GrpcInstrument {
+    rpc GetAllInstruments (GetAllRequest) returns (InstrumentResponse);
+}
+
+message GetAllRequest {}
+
+message GrpcInstrumentModel{
+    string instrumentId = 1;
+    string ticker = 2;
+    string description = 3;
+    int32 instrumentType = 4;
+}
+
+message InstrumentResponse {
+    repeated GrpcInstrumentModel instrument = 1;
+}

@@ -4,6 +4,7 @@ using InstrumentService.Services.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using InstrumentService.Data;
 using InstrumentService.SyncDataServices.Http;
+using InstrumentService.SyncDataServices.Grpc;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -15,6 +16,7 @@ builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 builder.Services.AddScoped<IInstrumentRepository, InstrumentRepository>();
 builder.Services.AddScoped<IInstrumentService, InstrumentService.Services.InstrumentService>();
 builder.Services.AddHttpClient<IHttpMovementDataClient, HttpMovementDataClient>();
+builder.Services.AddGrpc();
 
 // Configure DbContext based on the environment
 if (builder.Environment.IsDevelopment())
@@ -43,6 +45,13 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 app.MapControllers();
+app.MapGrpcService<GrpcInstrumentService>();
+
+// Optional
+app.MapGet("/protos/instruments.proto", async context =>
+{
+    await context.Response.WriteAsync(File.ReadAllText("Protos/instruments.proto"));
+});
 
 app.Run();
 

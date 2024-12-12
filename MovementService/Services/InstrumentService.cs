@@ -31,6 +31,11 @@ namespace MovementService.Services
             return _mapper.Map<InstrumentReadDto>(instrumentModel);
         }
 
+        public bool ExternalInstrumentExists(Guid externalInstrumentId)
+        {
+            return _instrumentRepository.ExternalInstrumentExists(externalInstrumentId);
+        }
+
         public IEnumerable<InstrumentReadDto> GetAllInstruments()
         {
             var instruments = _instrumentRepository.GetAllInstruments();

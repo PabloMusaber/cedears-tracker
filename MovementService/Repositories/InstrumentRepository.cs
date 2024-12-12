@@ -28,5 +28,10 @@ namespace MovementService.Infraestructure.Repositories
         {
             return _context.Instruments.ToList();
         }
+
+        public bool ExternalInstrumentExists(Guid externalInstrumentId)
+        {
+            return _context.Instruments.Any(p => p.ExternalId == externalInstrumentId);
+        }
     }
 }

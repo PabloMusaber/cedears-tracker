@@ -7,5 +7,6 @@ namespace MovementService.Services.Interfaces
         Task<InstrumentReadDto> CreateInstrument(InstrumentCreateDto instrumentCreateDto);
         IEnumerable<InstrumentReadDto> GetAllInstruments();
         bool InstrumentExists(Guid instrumentId);
+        bool ExternalInstrumentExists(Guid externalInstrumentId);
     }
 }

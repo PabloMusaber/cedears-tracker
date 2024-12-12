@@ -7,5 +7,6 @@ namespace MovementService.Infraestructure.Repositories.Interfaces
         bool InstrumentExists(Guid instrumentId);
         Task CreateInstrumentAsync(Instrument instrument);
         IEnumerable<Instrument> GetAllInstruments();
+        bool ExternalInstrumentExists(Guid externalInstrumentId);
     }
 }

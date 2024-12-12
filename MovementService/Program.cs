@@ -3,6 +3,7 @@ using MovementService.Data;
 using MovementService.Infraestructure.Repositories;
 using MovementService.Infraestructure.Repositories.Interfaces;
 using MovementService.Services.Interfaces;
+using MovementService.SyncDataServices.Grpc;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -15,6 +16,7 @@ builder.Services.AddScoped<IInstrumentRepository, InstrumentRepository>();
 builder.Services.AddScoped<IInstrumentService, MovementService.Services.InstrumentService>();
 builder.Services.AddScoped<IMovementRepository, MovementRepository>();
 builder.Services.AddScoped<IMovementService, MovementService.Services.MovementService>();
+builder.Services.AddScoped<IInstrumentDataClient, InstrumentDataClient>();
 
 // Configure DbContext based on the environment
 if (builder.Environment.IsDevelopment())
@@ -39,7 +41,10 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+PrepDb.PrepPopulation(app);
+
 app.UseHttpsRedirection();
+
 app.MapControllers();
 
 app.Run();
