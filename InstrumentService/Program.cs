@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using InstrumentService.Data;
 using InstrumentService.SyncDataServices.Http;
 using InstrumentService.SyncDataServices.Grpc;
+using InstrumentService.AsyncDataServices;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -16,6 +17,7 @@ builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 builder.Services.AddScoped<IInstrumentRepository, InstrumentRepository>();
 builder.Services.AddScoped<IInstrumentService, InstrumentService.Services.InstrumentService>();
 builder.Services.AddHttpClient<IHttpMovementDataClient, HttpMovementDataClient>();
+builder.Services.AddSingleton<IMessageBusClient, MessageBusClient>();
 builder.Services.AddGrpc();
 
 // Configure DbContext based on the environment

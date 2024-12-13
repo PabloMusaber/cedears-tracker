@@ -10,6 +10,7 @@ namespace InstrumentService.Profiles
         {
             CreateMap<InstrumentCreateDto, Instrument>();
             CreateMap<Instrument, InstrumentReadDto>();
+            CreateMap<InstrumentReadDto, InstrumentPublishedDto>();
             CreateMap<InstrumentReadDto, GrpcInstrumentModel>()
                 .ForMember(dest => dest.InstrumentId, opt => opt.MapFrom(src => src.Id.ToString()))
                 .ForMember(dest => dest.Ticker, opt => opt.MapFrom(src => src.Ticker))
