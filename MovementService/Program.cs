@@ -1,5 +1,7 @@
 using Microsoft.EntityFrameworkCore;
+using MovementService.AsyncDataServices;
 using MovementService.Data;
+using MovementService.EventProcessing;
 using MovementService.Infraestructure.Repositories;
 using MovementService.Infraestructure.Repositories.Interfaces;
 using MovementService.Services.Interfaces;
@@ -17,6 +19,8 @@ builder.Services.AddScoped<IInstrumentService, MovementService.Services.Instrume
 builder.Services.AddScoped<IMovementRepository, MovementRepository>();
 builder.Services.AddScoped<IMovementService, MovementService.Services.MovementService>();
 builder.Services.AddScoped<IInstrumentDataClient, InstrumentDataClient>();
+builder.Services.AddHostedService<MessageBusSubscriber>();
+builder.Services.AddSingleton<IEventProcessor, EventProcessor>();
 
 // Configure DbContext based on the environment
 if (builder.Environment.IsDevelopment())

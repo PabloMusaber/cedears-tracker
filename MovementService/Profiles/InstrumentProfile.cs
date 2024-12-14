@@ -12,6 +12,8 @@ namespace MovementService.Profiles
             CreateMap<Instrument, InstrumentReadDto>();
             CreateMap<GrpcInstrumentModel, InstrumentCreateDto>()
                 .ForMember(dest => dest.ExternalId, opt => opt.MapFrom(src => src.InstrumentId));
+            CreateMap<InstrumentPublishedDto, InstrumentCreateDto>()
+                .ForMember(dest => dest.ExternalId, opt => opt.MapFrom(src => src.Id));
         }
     }
 }

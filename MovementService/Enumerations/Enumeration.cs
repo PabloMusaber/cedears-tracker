@@ -13,5 +13,11 @@ namespace MovementService.Enumerations
             Buy = 'B',
             Sell = 'S'
         }
+
+        public enum EventType
+        {
+            InstrumentPublished,
+            Undetermined
+        }
     }
 }
