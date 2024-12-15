@@ -42,6 +42,11 @@ namespace MovementService.Services
             return _mapper.Map<IEnumerable<InstrumentReadDto>>(instruments);
         }
 
+        public async Task<List<InstrumentReadDto>> GetAllInstrumentsBalanceAsync()
+        {
+            return await _instrumentRepository.GetAllInstrumentsBalanceAsync();
+        }
+
         public bool InstrumentExists(Guid instrumentId)
         {
             return _instrumentRepository.InstrumentExists(instrumentId);

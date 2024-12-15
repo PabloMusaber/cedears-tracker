@@ -1,3 +1,4 @@
+using MovementService.Dtos;
 using MovementService.Models;
 
 namespace MovementService.Infraestructure.Repositories.Interfaces
@@ -8,5 +9,6 @@ namespace MovementService.Infraestructure.Repositories.Interfaces
         Task CreateInstrumentAsync(Instrument instrument);
         IEnumerable<Instrument> GetAllInstruments();
         bool ExternalInstrumentExists(Guid externalInstrumentId);
+        Task<List<InstrumentReadDto>> GetAllInstrumentsBalanceAsync();
     }
 }

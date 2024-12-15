@@ -1,0 +1,23 @@
+syntax = "proto3";
+
+option csharp_namespace = "MovementService";
+
+service GrpcInstrumentBalance {
+    rpc GetAllInstrumentsBalance (GetAllInstrumentsBalanceRequest) returns (InstrumentBalanceResponse);
+}
+
+message GetAllInstrumentsBalanceRequest {}
+
+message GrpcInstrumentBalanceModel{
+    string instrumentId = 1;
+    string ticker = 2;
+    string description = 3;
+    int32 holdings = 4;
+    string averagePurchasePrice = 5;
+    string investedAmount = 6;
+    int32 instrumentType = 7;
+}
+
+message InstrumentBalanceResponse {
+    repeated GrpcInstrumentBalanceModel instrumentBalance = 1;
+}
