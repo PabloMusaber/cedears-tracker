@@ -1,4 +1,6 @@
+using MarketService.AsyncDataServices;
 using MarketService.Data;
+using MarketService.EventProcessing;
 using MarketService.Infraestructure.Repositories;
 using MarketService.Infraestructure.Repositories.Interfaces;
 using MarketService.Services;
@@ -16,6 +18,8 @@ builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 builder.Services.AddScoped<IInstrumentBalanceRepository, InstrumentBalanceRepository>();
 builder.Services.AddScoped<IInstrumentBalanceService, InstrumentBalanceService>();
 builder.Services.AddScoped<IInstrumentBalanceDataClient, InstrumentBalanceDataClient>();
+builder.Services.AddHostedService<MessageBusSubscriber>();
+builder.Services.AddSingleton<IEventProcessor, EventProcessor>();
 
 // Configure DbContext based on the environment
 if (builder.Environment.IsDevelopment())

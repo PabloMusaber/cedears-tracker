@@ -8,5 +8,6 @@ namespace MarketService.Infraestructure.Repositories.Interfaces
         Task CreateInstrumentBalanceAsync(InstrumentBalance instrument);
         IEnumerable<InstrumentBalance> GetAllInstrumentsBalance();
         bool ExternalInstrumentExists(Guid externalInstrumentId);
+        Task UpdateInstrumentBalanceASync(InstrumentBalance instrument);
     }
 }

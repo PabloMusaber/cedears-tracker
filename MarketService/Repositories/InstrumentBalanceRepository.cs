@@ -1,6 +1,7 @@
 using MarketService.Infraestructure.Repositories.Interfaces;
 using MarketService.Models;
 using MarketService.Data;
+using Microsoft.EntityFrameworkCore;
 
 namespace MarketService.Infraestructure.Repositories
 {
@@ -32,6 +33,26 @@ namespace MarketService.Infraestructure.Repositories
         public bool ExternalInstrumentExists(Guid externalInstrumentId)
         {
             return _context.InstrumentsBalance.Any(p => p.ExternalId == externalInstrumentId);
+        }
+
+        public async Task UpdateInstrumentBalanceASync(InstrumentBalance instrument)
+        {
+            var originalInstrument = await _context.InstrumentsBalance
+                .FirstOrDefaultAsync(x => x.ExternalId == instrument.ExternalId);
+
+            if (originalInstrument == null)
+            {
+                throw new KeyNotFoundException($"Instrument with ExternalId '{instrument.ExternalId}' not found.");
+            }
+
+            originalInstrument.Ticker = instrument.Ticker;
+            originalInstrument.Description = instrument.Description;
+            originalInstrument.Holdings = instrument.Holdings;
+            originalInstrument.AveragePurchasePrice = instrument.AveragePurchasePrice;
+            originalInstrument.InvestedAmount = instrument.InvestedAmount;
+            originalInstrument.InstrumentType = instrument.InstrumentType;
+
+            await _context.SaveChangesAsync();
         }
     }
 }

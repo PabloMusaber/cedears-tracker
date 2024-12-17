@@ -10,7 +10,7 @@ namespace MarketService.Enumerations
 
         public enum EventType
         {
-            InstrumentPublished,
+            InstrumentBalancePublished,
             Undetermined
         }
     }

@@ -48,5 +48,10 @@ namespace MarketService.Services
             return _instrumentBalanceRepository.InstrumentBalanceExists(instrumentBalanceId);
         }
 
+        public async Task UpdateInstrumentBalance(InstrumentBalanceCreateDto instrumentBalanceCreateDto)
+        {
+            var instrument = _mapper.Map<InstrumentBalance>(instrumentBalanceCreateDto);
+            await _instrumentBalanceRepository.UpdateInstrumentBalanceASync(instrument);
+        }
     }
 }

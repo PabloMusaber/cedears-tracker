@@ -11,7 +11,8 @@ namespace MarketService.Profiles
             CreateMap<GrpcInstrumentBalanceModel, InstrumentBalanceCreateDto>()
                 .ForMember(dest => dest.ExternalId, opt => opt.MapFrom(src => src.InstrumentId));
             CreateMap<InstrumentBalanceCreateDto, InstrumentBalance>();
-            CreateMap<InstrumentBalance, InstrumentBalanceReadDto>();
+            CreateMap<InstrumentBalance, InstrumentBalanceReadDto>().ReverseMap();
+            CreateMap<InstrumentBalancePublishedDto, InstrumentBalanceCreateDto>();
         }
     }
 }
