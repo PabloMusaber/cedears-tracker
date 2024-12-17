@@ -26,6 +26,16 @@ namespace MovementService.Controllers
             if (movementReadDto == null)
                 return NotFound();
 
+            // Send Instrument Balance to MarketService
+            try
+            {
+                await _movementService.PublishNewInstrumentBalanceAsync(instrumentId);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"--> Could not send asynchronously: {ex.Message}");
+            }
+
             return Ok(movementReadDto);
         }
 

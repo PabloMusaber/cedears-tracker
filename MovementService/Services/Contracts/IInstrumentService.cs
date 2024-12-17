@@ -9,5 +9,6 @@ namespace MovementService.Services.Interfaces
         bool InstrumentExists(Guid instrumentId);
         bool ExternalInstrumentExists(Guid externalInstrumentId);
         Task<List<InstrumentReadDto>> GetAllInstrumentsBalanceAsync();
+        Task<InstrumentReadDto?> GetInstrumentBalanceAsync(Guid instrumentId);
     }
 }

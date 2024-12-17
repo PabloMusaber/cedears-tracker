@@ -52,5 +52,10 @@ namespace MovementService.Services
             return _instrumentRepository.InstrumentExists(instrumentId);
         }
 
+        public async Task<InstrumentReadDto?> GetInstrumentBalanceAsync(Guid instrumentId)
+        {
+            return await _instrumentRepository.GetInstrumentBalanceAsync(instrumentId);
+        }
+
     }
 }

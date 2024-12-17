@@ -21,6 +21,7 @@ builder.Services.AddScoped<IMovementService, MovementService.Services.MovementSe
 builder.Services.AddScoped<IInstrumentDataClient, InstrumentDataClient>();
 builder.Services.AddHostedService<MessageBusSubscriber>();
 builder.Services.AddSingleton<IEventProcessor, EventProcessor>();
+builder.Services.AddSingleton<IMessageBusClient, MessageBusClient>();
 builder.Services.AddGrpc();
 
 // Configure DbContext based on the environment

@@ -10,5 +10,6 @@ namespace MovementService.Infraestructure.Repositories.Interfaces
         IEnumerable<Instrument> GetAllInstruments();
         bool ExternalInstrumentExists(Guid externalInstrumentId);
         Task<List<InstrumentReadDto>> GetAllInstrumentsBalanceAsync();
+        Task<InstrumentReadDto?> GetInstrumentBalanceAsync(Guid instrumentId);
     }
 }

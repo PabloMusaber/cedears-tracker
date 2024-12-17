@@ -65,5 +65,31 @@ namespace MovementService.Infraestructure.Repositories
 
             return instrumentDtos;
         }
+
+        public async Task<InstrumentReadDto?> GetInstrumentBalanceAsync(Guid instrumentId)
+        {
+            var instrumentDto = await _context.Instruments
+                .Include(i => i.Movements)
+                .Where(i => i.Id == instrumentId)
+                .Select(i => new InstrumentReadDto
+                {
+                    Id = i.Id,
+                    ExternalId = i.ExternalId,
+                    Ticker = i.Ticker,
+                    Description = i.Description,
+                    InstrumentType = i.InstrumentType,
+                    AveragePurchasePrice = i.Movements
+                        .Where(m => m.MovementType == 'B')
+                        .Select(m => m.Price).Average(),
+                    InvestedAmount = i.Movements
+                        .Where(m => m.MovementType == 'B')
+                        .Sum(m => m.Price * m.Quantity),
+                    Holdings = i.Movements
+                        .Sum(m => m.MovementType == 'B' ? m.Quantity : -m.Quantity)
+                })
+                .FirstOrDefaultAsync();
+
+            return instrumentDto;
+        }
     }
 }

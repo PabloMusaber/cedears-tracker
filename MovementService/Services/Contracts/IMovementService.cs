@@ -7,5 +7,6 @@ namespace MovementService.Services.Interfaces
         Task<MovementReadDto?> InsertMovementAsync(Guid instrumentId, MovementCreateDto movementCreateDto);
         Task<IEnumerable<MovementReadDto>?> GetByInstrumentAsync(Guid instrumentId);
         Task<bool> DeleteAsync(Guid movementId);
+        Task PublishNewInstrumentBalanceAsync(Guid instrumentId);
     }
 }

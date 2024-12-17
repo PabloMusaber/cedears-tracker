@@ -1,4 +1,5 @@
 using AutoMapper;
+using MovementService.AsyncDataServices;
 using MovementService.Dtos;
 using MovementService.Infraestructure.Repositories.Interfaces;
 using MovementService.Models;
@@ -12,12 +13,14 @@ namespace MovementService.Services
         private readonly IMovementRepository _movementRepository;
         private readonly IMapper _mapper;
         private readonly IInstrumentService _instrumentService;
+        private readonly IMessageBusClient _messageBusClient;
 
-        public MovementService(IMovementRepository movementRepository, IMapper mapper, IInstrumentService instrumentService)
+        public MovementService(IMovementRepository movementRepository, IMapper mapper, IInstrumentService instrumentService, IMessageBusClient messageBusClient)
         {
             _movementRepository = movementRepository;
             _mapper = mapper;
             _instrumentService = instrumentService;
+            _messageBusClient = messageBusClient;
         }
 
         public async Task<MovementReadDto?> InsertMovementAsync(Guid instrumentId, MovementCreateDto movementCreateDto)
@@ -67,5 +70,12 @@ namespace MovementService.Services
             return Enum.IsDefined(typeof(MovementType), (int)movementTypeChar);
         }
 
+        public async Task PublishNewInstrumentBalanceAsync(Guid instrumentId)
+        {
+            var instrumentReadDto = await _instrumentService.GetInstrumentBalanceAsync(instrumentId);
+            var instrumentBalancePublishedDto = _mapper.Map<InstrumentBalancePublishedDto>(instrumentReadDto);
+            instrumentBalancePublishedDto.Event = "Instrument_Balance_Published";
+            _messageBusClient.PublishNewInstrumentBalance(instrumentBalancePublishedDto);
+        }
     }
 }
