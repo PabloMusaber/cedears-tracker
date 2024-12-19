@@ -18,8 +18,11 @@ builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 builder.Services.AddScoped<IInstrumentBalanceRepository, InstrumentBalanceRepository>();
 builder.Services.AddScoped<IInstrumentBalanceService, InstrumentBalanceService>();
 builder.Services.AddScoped<IInstrumentBalanceDataClient, InstrumentBalanceDataClient>();
+builder.Services.AddHttpClient<IMarketClientService, MarketClientService>();
+builder.Services.AddMemoryCache();
 builder.Services.AddHostedService<MessageBusSubscriber>();
 builder.Services.AddSingleton<IEventProcessor, EventProcessor>();
+builder.Services.AddSingleton<IMessageBusClient, MessageBusClient>();
 
 // Configure DbContext based on the environment
 if (builder.Environment.IsDevelopment())

@@ -2,6 +2,6 @@ namespace MarketService.EventProcessing
 {
     public interface IEventProcessor
     {
-        void ProcessEvent(string message);
+        Task ProcessEventAsync(string message);
     }
 }

@@ -13,6 +13,7 @@ namespace MarketService.Profiles
             CreateMap<InstrumentBalanceCreateDto, InstrumentBalance>();
             CreateMap<InstrumentBalance, InstrumentBalanceReadDto>().ReverseMap();
             CreateMap<InstrumentBalancePublishedDto, InstrumentBalanceCreateDto>();
+            CreateMap<InstrumentBalanceReadDto, InstrumentBalanceExportDto>();
         }
     }
 }

@@ -61,7 +61,7 @@ namespace MarketService.AsyncDataServices
                 var body = ea.Body;
                 var notificationMessage = Encoding.UTF8.GetString(body.ToArray());
 
-                _eventProcessor.ProcessEvent(notificationMessage);
+                _eventProcessor.ProcessEventAsync(notificationMessage);
             };
 
             _channel.BasicConsume(queue: _queueName, autoAck: true, consumer: consumer);

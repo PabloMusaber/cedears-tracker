@@ -11,6 +11,7 @@ namespace MarketService.Enumerations
         public enum EventType
         {
             InstrumentBalancePublished,
+            RequestInstrumentBalanceExport,
             Undetermined
         }
     }
