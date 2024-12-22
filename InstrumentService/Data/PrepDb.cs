@@ -6,7 +6,7 @@ namespace InstrumentService.Infraestructure
 {
     public static class PrepDb
     {
-        public static void PrepPopulation(IApplicationBuilder app, bool isProd)
+        public static void PrepPopulation(IApplicationBuilder app)
         {
             using (var serviceScope = app.ApplicationServices.CreateScope())
             {
@@ -14,7 +14,7 @@ namespace InstrumentService.Infraestructure
 
                 if (dbContext != null)
                 {
-                    SeedData(dbContext, isProd);
+                    SeedData(dbContext);
                 }
                 else
                 {
@@ -23,20 +23,20 @@ namespace InstrumentService.Infraestructure
             }
         }
 
-        private static void SeedData(AppDbContext context, bool isProd)
+        private static void SeedData(AppDbContext context)
         {
-            if (isProd)
-            {
-                Console.WriteLine("--> Attempting to apply migrations...");
-                try
-                {
-                    //context.Database.Migrate();
-                }
-                catch (Exception ex)
-                {
-                    Console.WriteLine($"--> Could not run migrations: {ex.Message}");
-                }
-            }
+            // if (isProd)
+            // {
+            //     Console.WriteLine("--> Attempting to apply migrations...");
+            //     try
+            //     {
+            //         //context.Database.Migrate();
+            //     }
+            //     catch (Exception ex)
+            //     {
+            //         Console.WriteLine($"--> Could not run migrations: {ex.Message}");
+            //     }
+            // }
 
             if (context.Instruments != null && !context.Instruments.Any())
             {

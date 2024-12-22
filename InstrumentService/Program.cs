@@ -6,6 +6,7 @@ using InstrumentService.Data;
 using InstrumentService.SyncDataServices.Http;
 using InstrumentService.SyncDataServices.Grpc;
 using InstrumentService.AsyncDataServices;
+using InstrumentService.Infraestructure;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -43,7 +44,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-// PrepDb
+PrepDb.PrepPopulation(app);
 
 app.UseHttpsRedirection();
 app.MapControllers();
