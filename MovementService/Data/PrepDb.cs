@@ -1,6 +1,8 @@
 using MovementService.Dtos;
+using MovementService.Models;
 using MovementService.Services.Interfaces;
 using MovementService.SyncDataServices.Grpc;
+using static MovementService.Enumerations.Enumerations;
 
 namespace MovementService.Data
 {
@@ -18,7 +20,13 @@ namespace MovementService.Data
 
                     if (instruments != null)
                     {
-                        SeedData(serviceScope.ServiceProvider.GetService<IInstrumentService>() ?? throw new ArgumentNullException("GrpcInstrument configuration is missing."), instruments);
+                        SeedInstrumentsData(serviceScope.ServiceProvider.GetService<IInstrumentService>() ?? throw new ArgumentNullException("GrpcInstrument configuration is missing."), instruments);
+
+                        var dbContext = serviceScope.ServiceProvider.GetService<AppDbContext>();
+                        if (dbContext != null)
+                        {
+                            SeedMovementsData(dbContext);
+                        }
                     }
                 }
                 else
@@ -29,7 +37,7 @@ namespace MovementService.Data
             }
         }
 
-        private static void SeedData(IInstrumentService instrumentService, IEnumerable<InstrumentCreateDto> instruments)
+        private static void SeedInstrumentsData(IInstrumentService instrumentService, IEnumerable<InstrumentCreateDto> instruments)
         {
             Console.WriteLine("--> Seeding new instruments...");
 
@@ -40,6 +48,45 @@ namespace MovementService.Data
                     instrumentService.CreateInstrument(inst);
                 }
             }
+        }
+
+        private static void SeedMovementsData(AppDbContext context)
+        {
+            Console.WriteLine("--> Seeding movements...");
+            var instruments = context.Instruments.ToList();
+
+            if (!instruments.Any())
+            {
+                Console.WriteLine("--> No instruments found. Skipping movements seeding.");
+                return;
+            }
+
+            var random = new Random();
+            foreach (var instrument in instruments)
+            {
+                if (!context.Movements.Any(m => m.InstrumentId == instrument.Id))
+                {
+                    context.Movements.AddRange(
+                        new Movement
+                        {
+                            InstrumentId = instrument.Id,
+                            MovementType = (char)MovementType.Buy,
+                            Quantity = random.Next(1, 30),
+                            Price = random.Next(1000, 25000)
+                        },
+                        new Movement
+                        {
+                            InstrumentId = instrument.Id,
+                            MovementType = (char)MovementType.Buy,
+                            Quantity = random.Next(1, 30),
+                            Price = random.Next(1000, 25000)
+                        }
+                    );
+                }
+            }
+
+            context.SaveChanges();
+            Console.WriteLine("--> Movements seeding completed.");
         }
     }
 }
